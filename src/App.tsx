@@ -6,6 +6,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
 import Demo from "./pages/Demo";
+import CreateProfile from "./pages/CreateProfile";
+import PetProfile from "./pages/PetProfile";
+import Shop from "./pages/Shop";
+import Blog from "./pages/Blog";
+import Community from "./pages/Community";
+import About from "./pages/About";
 import Plans from "./pages/Plans";
 import NotFound from "./pages/NotFound";
 
@@ -19,13 +25,19 @@ const App = () => (
       <BrowserRouter>
         <div className="min-h-screen bg-background">
           <Navigation />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/demo" element={<Demo />} />
-            <Route path="/planos" element={<Plans />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/demo" element={<Demo />} />
+              <Route path="/criar-perfil" element={<CreateProfile />} />
+              <Route path="/perfil/:id" element={<PetProfile />} />
+              <Route path="/loja" element={<Shop />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/comunidade" element={<Community />} />
+              <Route path="/sobre" element={<About />} />
+              <Route path="/planos" element={<Plans />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
         </div>
       </BrowserRouter>
     </TooltipProvider>

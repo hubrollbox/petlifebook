@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Heart, Star, Shield, Smartphone, Camera, Users } from "lucide-react";
+import { Heart, Star, Shield, Camera, Users, BookOpen, Upload, Share2, FileText, Award, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import heroImage from "@/assets/hero-image.jpg";
@@ -17,16 +17,16 @@ const Home = () => {
         
         <div className="relative container mx-auto max-w-4xl text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-tight">
-            Eternize as Memórias do seu Pet
+            Guarde e celebre cada momento da vida do seu pet
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Crie um memorial digital único para seu companheiro de quatro patas. 
-            Compartilhe fotos, histórias e mantenha viva a memória de quem tanto amou.
+            PetLifeBook é um espaço digital onde você pode criar o "livro da vida" do seu animal — 
+            registrando fotos, vídeos, histórias e marcos desde o primeiro dia até sempre.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button size="lg" variant="memorial" asChild>
-              <Link to="/demo">Criar Memorial Grátis</Link>
+              <Link to="/criar-perfil">Criar Perfil Grátis</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
               <Link to="/demo">Ver Exemplo</Link>
@@ -44,15 +44,87 @@ const Home = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Um lugar especial para eternizar o amor
+              Como Funciona
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Cada pet merece ser lembrado de forma única. Nosso memorial digital 
-              oferece tudo o que você precisa para honrar a memória do seu companheiro.
+              Criar o livro da vida do seu pet é simples e rápido
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-4 gap-8">
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mb-4">
+                  <BookOpen className="w-6 h-6 text-white" />
+                </div>
+                <CardTitle>1. Crie o Perfil</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Crie o perfil do animal em minutos com informações básicas.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center mb-4">
+                  <Upload className="w-6 h-6 text-white" />
+                </div>
+                <CardTitle>2. Adicione Memórias</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Adicione fotos, vídeos e marcos importantes da vida.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-accent to-memorial-gold rounded-full flex items-center justify-center mb-4">
+                  <Share2 className="w-6 h-6 text-white" />
+                </div>
+                <CardTitle>3. Compartilhe</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Partilhe ou mantenha privado — guarde tudo para sempre.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-memorial-gold to-primary rounded-full flex items-center justify-center mb-4">
+                  <FileText className="w-6 h-6 text-white" />
+                </div>
+                <CardTitle>4. Preserve</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Exporte em PDF ou crie produtos físicos personalizados.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Funcionalidades Completas
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Tudo o que você precisa para criar e manter o livro da vida do seu pet, 
+              desde funcionalidades básicas até recursos premium.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card className="text-center hover:shadow-memorial transition-all duration-300">
               <CardHeader>
                 <div className="mx-auto w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mb-4">
@@ -62,7 +134,7 @@ const Home = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Organize fotos, vídeos e histórias em uma linha do tempo linda e cronológica.
+                  Organize fotos, vídeos e marcos em uma linha do tempo cronológica.
                 </p>
               </CardContent>
             </Card>
@@ -76,7 +148,7 @@ const Home = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Conecte-se com outros tutores e compartilhe experiências em um ambiente acolhedor.
+                  Conecte-se com outros tutores em um ambiente acolhedor.
                 </p>
               </CardContent>
             </Card>
@@ -90,7 +162,49 @@ const Home = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Suas memórias ficam seguras em nossa plataforma com backup automático e privacidade total.
+                  Suas memórias ficam seguras com backup automático e privacidade total.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-memorial-gold to-primary rounded-full flex items-center justify-center mb-4">
+                  <Award className="w-6 h-6 text-white" />
+                </div>
+                <CardTitle>Produtos Personalizados</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Crie livros físicos, quadros e lembranças únicas.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mb-4">
+                  <FileText className="w-6 h-6 text-white" />
+                </div>
+                <CardTitle>Export Automático</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Exporte PDFs e crie vídeos de memória automaticamente.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-secondary to-memorial-gold rounded-full flex items-center justify-center mb-4">
+                  <Handshake className="w-6 h-6 text-white" />
+                </div>
+                <CardTitle>Rede de Parceiros</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Acesso a criadores, veterinários e fotógrafos especializados.
                 </p>
               </CardContent>
             </Card>
