@@ -46,7 +46,8 @@
     --radius: 0.75rem;
 
     /* Memorial-specific colors */
-    --memorial-gold: 45 85% 70%;
+    --memorial-gold: 45 93% 58%;
+    --memorial-gold-foreground: 0 0% 2%;
     --memorial-lavender: 280 60% 80%;
     --memorial-rose: 340 60% 80%;
 

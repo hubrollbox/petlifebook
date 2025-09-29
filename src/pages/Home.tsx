@@ -3,6 +3,7 @@ import { Heart, Star, Shield, Camera, Users, BookOpen, Upload, Share2, FileText,
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import heroImage from "@/assets/hero-image.jpg";
+import StarrySky from "@/components/StarrySky";
 
 const Home = () => {
   return (
@@ -108,6 +109,13 @@ const Home = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* Céu Estrelado */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-background to-muted/30">
+        <div className="container mx-auto max-w-6xl">
+          <StarrySky />
         </div>
       </section>
 
