@@ -32,7 +32,7 @@ const PetCard = ({
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         {isPremium && (
-          <Badge className="absolute top-3 right-3 bg-memorial-gold text-memorial-gold-foreground">
+          <Badge className="absolute top-3 right-3 bg-memorial-gold text-black">
             Premium
           </Badge>
         )}

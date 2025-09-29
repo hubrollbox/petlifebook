@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Heart, Star, Shield, Camera, Users, BookOpen, Upload, Share2, FileText, Award, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import heroImage from "@/assets/hero-image.jpg";
+import heroImage from "@/assets/starry-sky-hero.jpg";
 import StarrySky from "@/components/StarrySky";
 
 const Home = () => {
@@ -119,120 +119,226 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+      {/* Funcionalidades */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Funcionalidades Completas
+              Funcionalidades
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Tudo o que você precisa para criar e manter o livro da vida do seu pet, 
-              desde funcionalidades básicas até recursos premium.
+              Tudo o que precisa para guardar e celebrar cada momento da vida do seu pet
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="text-center hover:shadow-memorial transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mb-4">
-                  <Camera className="w-6 h-6 text-white" />
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-2xl font-bold mb-6 text-primary">Gratuitas</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span>Criação de perfil de pets</span>
                 </div>
-                <CardTitle>Timeline de Memórias</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Organize fotos, vídeos e marcos em uma linha do tempo cronológica.
-                </p>
-              </CardContent>
-            </Card>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span>Upload de fotos e vídeos</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span>Timeline básica</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span>Partilha de histórias</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span>Acesso ao blog e comunidade</span>
+                </div>
+              </div>
+            </div>
 
-            <Card className="text-center hover:shadow-memorial transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-6 h-6 text-white" />
+            <div>
+              <h3 className="text-2xl font-bold mb-6 text-memorial-gold">Premium</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-memorial-gold rounded-full"></div>
+                  <span>Personalização avançada</span>
                 </div>
-                <CardTitle>Comunidade de Apoio</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Conecte-se com outros tutores em um ambiente acolhedor.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-memorial transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-accent to-memorial-gold rounded-full flex items-center justify-center mb-4">
-                  <Shield className="w-6 h-6 text-white" />
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-memorial-gold rounded-full"></div>
+                  <span>Armazenamento ilimitado</span>
                 </div>
-                <CardTitle>Seguro e Privado</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Suas memórias ficam seguras com backup automático e privacidade total.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-memorial transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-memorial-gold to-primary rounded-full flex items-center justify-center mb-4">
-                  <Award className="w-6 h-6 text-white" />
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-memorial-gold rounded-full"></div>
+                  <span>Diário de vida com marcos</span>
                 </div>
-                <CardTitle>Produtos Personalizados</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Crie livros físicos, quadros e lembranças únicas.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-memorial transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mb-4">
-                  <FileText className="w-6 h-6 text-white" />
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-memorial-gold rounded-full"></div>
+                  <span>Livros de memória automáticos</span>
                 </div>
-                <CardTitle>Export Automático</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Exporte PDFs e crie vídeos de memória automaticamente.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-memorial transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-secondary to-memorial-gold rounded-full flex items-center justify-center mb-4">
-                  <Handshake className="w-6 h-6 text-white" />
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-memorial-gold rounded-full"></div>
+                  <span>Integração com redes sociais</span>
                 </div>
-                <CardTitle>Rede de Parceiros</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Acesso a criadores, veterinários e fotógrafos especializados.
-                </p>
-              </CardContent>
-            </Card>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-memorial-gold rounded-full"></div>
+                  <span>Serviços físicos</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto max-w-4xl">
+      {/* Parcerias */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Histórias que tocam o coração
+              Parceiros
             </h2>
             <p className="text-lg text-muted-foreground">
-              Veja como outros tutores estão honrando a memória de seus companheiros
+              Trabalhamos com os melhores profissionais do setor
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardContent className="p-6">
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mb-4">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2">Criadores / Canis</h3>
+                <p className="text-sm text-muted-foreground">
+                  Rede certificada de criadores responsáveis
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardContent className="p-6">
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center mb-4">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2">Clínicas Veterinárias</h3>
+                <p className="text-sm text-muted-foreground">
+                  Cuidados especializados para o seu pet
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardContent className="p-6">
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-accent to-memorial-gold rounded-full flex items-center justify-center mb-4">
+                  <Handshake className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2">Pet Shops</h3>
+                <p className="text-sm text-muted-foreground">
+                  Produtos de qualidade para o seu animal
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardContent className="p-6">
+                <div className="mx-auto w-12 h-12 bg-gradient-to-r from-memorial-gold to-primary rounded-full flex items-center justify-center mb-4">
+                  <Camera className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2">Fotógrafos</h3>
+                <p className="text-sm text-muted-foreground">
+                  Sessões fotográficas especializadas
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <div className="bg-card p-8 rounded-2xl">
+              <h3 className="text-xl font-bold mb-4">Seja Parceiro</h3>
+              <p className="text-muted-foreground mb-6">
+                Junte-se à nossa rede de parceiros e ofereça os seus serviços aos tutores
+              </p>
+              <Button>Candidatar-se</Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Blog */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Blog
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Últimas publicações, histórias de pets e dicas de criação
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="hover:shadow-memorial transition-all duration-300">
+              <CardContent className="p-0">
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20"></div>
+                <div className="p-6">
+                  <h3 className="font-semibold mb-2">Como lidar com a perda de um pet</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Dicas importantes para atravessar este momento difícil...
+                  </p>
+                  <Button variant="outline" size="sm">Ler mais</Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-memorial transition-all duration-300">
+              <CardContent className="p-0">
+                <div className="h-48 bg-gradient-to-br from-secondary/20 to-accent/20"></div>
+                <div className="p-6">
+                  <h3 className="font-semibold mb-2">Cuidados essenciais para filhotes</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Guia completo para os primeiros meses de vida...
+                  </p>
+                  <Button variant="outline" size="sm">Ler mais</Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-memorial transition-all duration-300">
+              <CardContent className="p-0">
+                <div className="h-48 bg-gradient-to-br from-accent/20 to-memorial-gold/20"></div>
+                <div className="p-6">
+                  <h3 className="font-semibold mb-2">Histórias que nos inspiram</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Conheça histórias emocionantes de outros tutores...
+                  </p>
+                  <Button variant="outline" size="sm">Ler mais</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-8">
+            <Button asChild>
+              <Link to="/blog">Leia mais no blog</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testemunhos */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Testemunhos
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              O que dizem outros tutores sobre o PetLifeBook
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
             <Card className="hover:shadow-memorial transition-all duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
@@ -241,17 +347,15 @@ const Home = () => {
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
-                  "O PetMemorial me ajudou a processar a partida do meu Thor. 
-                  Poder ver todas nossas memórias organizadas de forma tão carinhosa 
-                  foi um verdadeiro presente."
+                  "Criar o perfil da Mimi foi muito fácil. Agora tenho todas as memórias dela organizadas num só lugar."
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mr-3">
                     <Heart className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold">Maria Silva</p>
-                    <p className="text-sm text-muted-foreground">Tutora do Thor</p>
+                    <p className="font-semibold">Ana Pereira</p>
+                    <p className="text-sm text-muted-foreground">Criadora em Lisboa</p>
                   </div>
                 </div>
               </CardContent>
@@ -265,16 +369,37 @@ const Home = () => {
                   ))}
                 </div>
                 <p className="text-foreground mb-4">
-                  "A comunidade aqui é incrível. Encontrei pessoas que entendem 
-                  exatamente o que estou passando. Isso fez toda diferença no meu luto."
+                  "O PetLifeBook permitiu-me partilhar a história do Zidane com toda a família. É muito emocionante."
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center mr-3">
                     <Heart className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold">Carlos Mendes</p>
-                    <p className="text-sm text-muted-foreground">Tutor da Luna</p>
+                    <p className="font-semibold">João Silva</p>
+                    <p className="text-sm text-muted-foreground">Veterinário no Porto</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-memorial transition-all duration-300">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-memorial-gold fill-memorial-gold" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-4">
+                  "A funcionalidade premium vale cada cêntimo. Os livros de memória ficam lindos!"
+                </p>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-r from-accent to-memorial-gold rounded-full flex items-center justify-center mr-3">
+                    <Heart className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Maria Costa</p>
+                    <p className="text-sm text-muted-foreground">Fotógrafa de pets</p>
                   </div>
                 </div>
               </CardContent>
@@ -294,8 +419,8 @@ const Home = () => {
             sem cartão de crédito necessário.
           </p>
           
-          <Button size="lg" variant="memorial" asChild>
-            <Link to="/demo">Criar Memorial Grátis</Link>
+          <Button size="lg" asChild>
+            <Link to="/criar-perfil">Criar Perfil Grátis</Link>
           </Button>
         </div>
       </section>
