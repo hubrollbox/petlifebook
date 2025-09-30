@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
-import petExample1 from "@/assets/pet-example-1.jpg";
-import petExample2 from "@/assets/pet-example-2.jpg";
+import dogZidane from "@/assets/pets/dog-zidane.jpg";
+import catMimi from "@/assets/pets/cat-mimi.jpg";
+import catMimi2 from "@/assets/pets/cat-mimi-2.jpg";
 
 const PetProfile = () => {
   const [newMessage, setNewMessage] = useState("");
@@ -18,7 +19,7 @@ const PetProfile = () => {
       date: "2024-01-15",
       type: "photo",
       content: "Primeiro dia em casa! 🏠",
-      media: petExample1,
+      media: dogZidane,
       likes: 24
     },
     {
@@ -33,7 +34,7 @@ const PetProfile = () => {
       date: "2024-03-05",
       type: "video",
       content: "Aprendendo a buscar a bolinha 🎾",
-      media: petExample2,
+      media: catMimi,
       likes: 31
     }
   ];
@@ -62,14 +63,14 @@ const PetProfile = () => {
         <div className="absolute inset-0 bg-black/20" />
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${petExample1})` }}
+          style={{ backgroundImage: `url(${dogZidane})` }}
         />
         
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
           <div className="container mx-auto max-w-4xl">
             <div className="flex items-end space-x-4">
               <Avatar className="w-24 h-24 border-4 border-white shadow-lg">
-                <AvatarImage src={petExample1} alt="Thor" />
+                <AvatarImage src={dogZidane} alt="Thor" />
                 <AvatarFallback>T</AvatarFallback>
               </Avatar>
               
@@ -193,7 +194,7 @@ const PetProfile = () => {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {[petExample1, petExample2, petExample1, petExample2, petExample1, petExample2].map((image, index) => (
+                  {[dogZidane, catMimi, catMimi2, dogZidane, catMimi, catMimi2].map((image, index) => (
                     <div key={index} className="aspect-square rounded-lg overflow-hidden bg-muted">
                       <img 
                         src={image} 
