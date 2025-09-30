@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import petExample1 from "@/assets/pet-example-1.jpg";
-import petExample2 from "@/assets/pet-example-2.jpg";
+import dogZidane from "@/assets/pets/dog-zidane.jpg";
+import catMimi from "@/assets/pets/cat-mimi.jpg";
+import catMimi2 from "@/assets/pets/cat-mimi-2.jpg";
 
 const Demo = () => {
   const [activeTab, setActiveTab] = useState("timeline");
@@ -17,7 +18,7 @@ const Demo = () => {
       date: "15 de março, 2024",
       title: "Primeiro dia em casa",
       content: "Max chegou em casa hoje! Estava um pouco assustado, mas logo se sentiu em família.",
-      image: petExample1,
+      image: catMimi,
       likes: 12,
       comments: 3
     },
@@ -36,7 +37,7 @@ const Demo = () => {
       date: "5 de abril, 2024",
       title: "Passeio no parque",
       content: "Primeiro passeio no parque. Max adorou correr e brincar com outros cães!",
-      image: petExample2,
+      image: catMimi2,
       likes: 15,
       comments: 5
     }
@@ -49,7 +50,7 @@ const Demo = () => {
         <Card className="mb-8 overflow-hidden">
           <div 
             className="h-48 bg-cover bg-center relative"
-            style={{ backgroundImage: `url(${petExample1})` }}
+            style={{ backgroundImage: `url(${dogZidane})` }}
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <Badge className="absolute top-4 right-4 bg-memorial-gold text-white">
