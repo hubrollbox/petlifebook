@@ -1,13 +1,32 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Heart, Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Heart, Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleCreateMemorial = () => {
+    if (user) {
+      navigate("/criar-perfil");
+    } else {
+      navigate("/auth");
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -49,12 +68,53 @@ const Navigation = () => {
             >
               Planos
             </Link>
-            <Button variant="outline" size="sm">
-              Entrar
-            </Button>
-            <Button size="sm" className="bg-gradient-to-r from-primary to-secondary hover:shadow-memorial">
-              Criar Memorial Grátis
-            </Button>
+            {user ? (
+              <>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      <User className="w-4 h-4 mr-2" />
+                      {user.email?.split('@')[0]}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate("/criar-perfil")}>
+                      Meus Pets
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/planos")}>
+                      Planos
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={signOut}>
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Sair
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Button 
+                  size="sm" 
+                  className="bg-gradient-to-r from-primary to-secondary hover:shadow-memorial"
+                  onClick={handleCreateMemorial}
+                >
+                  Criar Memorial Grátis
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" onClick={() => navigate("/auth")}>
+                  Entrar
+                </Button>
+                <Button 
+                  size="sm" 
+                  className="bg-gradient-to-r from-primary to-secondary hover:shadow-memorial"
+                  onClick={handleCreateMemorial}
+                >
+                  Criar Memorial Grátis
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -102,12 +162,57 @@ const Navigation = () => {
                 Planos
               </Link>
               <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="outline" size="sm">
-                  Entrar
-                </Button>
-                <Button size="sm" className="bg-gradient-to-r from-primary to-secondary">
-                  Criar Memorial Grátis
-                </Button>
+                {user ? (
+                  <>
+                    <div className="text-sm text-muted-foreground px-2">
+                      {user.email}
+                    </div>
+                    <Button 
+                      size="sm" 
+                      className="bg-gradient-to-r from-primary to-secondary"
+                      onClick={() => {
+                        handleCreateMemorial();
+                        setIsOpen(false);
+                      }}
+                    >
+                      Criar Memorial Grátis
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => {
+                        signOut();
+                        setIsOpen(false);
+                      }}
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Sair
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => {
+                        navigate("/auth");
+                        setIsOpen(false);
+                      }}
+                    >
+                      Entrar
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      className="bg-gradient-to-r from-primary to-secondary"
+                      onClick={() => {
+                        handleCreateMemorial();
+                        setIsOpen(false);
+                      }}
+                    >
+                      Criar Memorial Grátis
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
