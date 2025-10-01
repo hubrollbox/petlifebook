@@ -33,7 +33,7 @@ const App = () => (
                 <Route path="/demo" element={<Demo />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/criar-perfil" element={<CreateProfile />} />
-                <Route path="/perfil/:id" element={<PetProfile />} />
+                <Route path="/pet/:id" element={<PetProfile />} />
                 <Route path="/loja" element={<Shop />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/comunidade" element={<Community />} />
