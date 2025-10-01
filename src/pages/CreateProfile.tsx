@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Camera, Upload, Save, Share2 } from "lucide-react";
+import { Camera, Upload, Save, Share2, Loader2, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,18 +9,157 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const CreateProfile = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [profileData, setProfileData] = useState({
     name: "",
     species: "",
     breed: "",
     birthDate: "",
+    deathDate: "",
+    location: "",
     story: "",
-    isPublic: false,
-    collaborators: ""
+    isDeceased: false
   });
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const validImages = files.filter(file => file.type.startsWith('image/'));
+    
+    if (validImages.length + selectedImages.length > 10) {
+      toast({
+        title: "Limite excedido",
+        description: "Máximo de 10 fotos no plano gratuito",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setSelectedImages([...selectedImages, ...validImages]);
+  };
+
+  const removeImage = (index: number) => {
+    setSelectedImages(selectedImages.filter((_, i) => i !== index));
+  };
+
+  const uploadImages = async (petId: string): Promise<string | null> => {
+    if (selectedImages.length === 0) return null;
+
+    try {
+      const mainImage = selectedImages[0];
+      const fileExt = mainImage.name.split('.').pop();
+      const fileName = `${petId}/${Date.now()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('pet-photos')
+        .upload(fileName, mainImage);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('pet-photos')
+        .getPublicUrl(fileName);
+
+      return publicUrl;
+    } catch (error: any) {
+      console.error('Error uploading images:', error);
+      throw error;
+    }
+  };
+
+  const validateForm = (): boolean => {
+    if (!profileData.name.trim()) {
+      toast({
+        title: "Campo obrigatório",
+        description: "O nome do animal é obrigatório",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    if (!profileData.species) {
+      toast({
+        title: "Campo obrigatório",
+        description: "A espécie do animal é obrigatória",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handlePublish = async () => {
+    if (!user) {
+      toast({
+        title: "Autenticação necessária",
+        description: "Faça login para criar um perfil",
+        variant: "destructive"
+      });
+      navigate("/auth");
+      return;
+    }
+
+    if (!validateForm()) return;
+
+    setLoading(true);
+
+    try {
+      const { data: pet, error: petError } = await supabase
+        .from('pets')
+        .insert({
+          owner_id: user.id,
+          name: profileData.name,
+          breed: profileData.breed || null,
+          birth_date: profileData.birthDate || null,
+          death_date: profileData.deathDate || null,
+          location: profileData.location || null,
+          story: profileData.story || null,
+          is_deceased: profileData.isDeceased,
+          is_premium: false
+        })
+        .select()
+        .single();
+
+      if (petError) throw petError;
+
+      const imageUrl = await uploadImages(pet.id);
+
+      if (imageUrl) {
+        const { error: updateError } = await supabase
+          .from('pets')
+          .update({ profile_image_url: imageUrl })
+          .eq('id', pet.id);
+
+        if (updateError) throw updateError;
+      }
+
+      toast({
+        title: "Perfil criado!",
+        description: `O perfil de ${profileData.name} foi criado com sucesso.`
+      });
+
+      navigate(`/pet/${pet.id}`);
+    } catch (error: any) {
+      console.error('Error creating profile:', error);
+      toast({
+        title: "Erro ao criar perfil",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const steps = [
     { number: 1, title: "Dados do Animal", icon: Camera },
@@ -83,18 +223,18 @@ const CreateProfile = () => {
                   </div>
                   <div>
                     <Label htmlFor="species">Espécie *</Label>
-                    <Select>
+                    <Select value={profileData.species} onValueChange={(value) => setProfileData({...profileData, species: value})}>
                       <SelectTrigger>
                         <SelectValue placeholder="Selecione a espécie" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="cao">Cão</SelectItem>
-                        <SelectItem value="gato">Gato</SelectItem>
-                        <SelectItem value="passaro">Pássaro</SelectItem>
-                        <SelectItem value="peixe">Peixe</SelectItem>
-                        <SelectItem value="hamster">Hamster</SelectItem>
-                        <SelectItem value="coelho">Coelho</SelectItem>
-                        <SelectItem value="outro">Outro</SelectItem>
+                        <SelectItem value="Cão">Cão</SelectItem>
+                        <SelectItem value="Gato">Gato</SelectItem>
+                        <SelectItem value="Pássaro">Pássaro</SelectItem>
+                        <SelectItem value="Peixe">Peixe</SelectItem>
+                        <SelectItem value="Hamster">Hamster</SelectItem>
+                        <SelectItem value="Coelho">Coelho</SelectItem>
+                        <SelectItem value="Outro">Outro</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -121,12 +261,25 @@ const CreateProfile = () => {
                   </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="breeder">ID do Criador (Opcional)</Label>
-                  <Input 
-                    id="breeder" 
-                    placeholder="Caso tenha sido adquirido de um criador cadastrado"
-                  />
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <Label htmlFor="location">Localização</Label>
+                    <Input 
+                      id="location" 
+                      placeholder="Ex: Lisboa, Portugal"
+                      value={profileData.location}
+                      onChange={(e) => setProfileData({...profileData, location: e.target.value})}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="deathDate">Data de Falecimento (Opcional)</Label>
+                    <Input 
+                      id="deathDate" 
+                      type="date"
+                      value={profileData.deathDate}
+                      onChange={(e) => setProfileData({...profileData, deathDate: e.target.value, isDeceased: !!e.target.value})}
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -136,29 +289,60 @@ const CreateProfile = () => {
                 <div className="text-center">
                   <div className="border-2 border-dashed border-muted rounded-lg p-12">
                     <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">Upload de Fotos e Vídeos</h3>
+                    <h3 className="text-lg font-semibold mb-2">Upload de Fotos</h3>
                     <p className="text-muted-foreground mb-4">
-                      Arraste arquivos aqui ou clique para selecionar
+                      Adicione fotos do seu animal de estimação
                     </p>
-                    <Button variant="outline">Selecionar Arquivos</Button>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageSelect}
+                      className="hidden"
+                      id="image-upload"
+                    />
+                    <Button variant="outline" onClick={() => document.getElementById('image-upload')?.click()}>
+                      Selecionar Fotos
+                    </Button>
                     
                     <div className="mt-6 text-sm text-muted-foreground">
                       <Badge variant="outline" className="mr-2">Plano Gratuito</Badge>
-                      <span>Limite: 10 fotos e 2 vídeos</span>
-                      <br />
-                      <Button variant="link" size="sm" className="mt-2">
-                        Fazer upgrade para upload ilimitado
-                      </Button>
+                      <span>Limite: 10 fotos | {selectedImages.length}/10</span>
                     </div>
                   </div>
                 </div>
+
+                {selectedImages.length > 0 && (
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                    {selectedImages.map((image, index) => (
+                      <div key={index} className="relative group">
+                        <img
+                          src={URL.createObjectURL(image)}
+                          alt={`Preview ${index + 1}`}
+                          className="w-full h-32 object-cover rounded-lg"
+                        />
+                        <Button
+                          size="icon"
+                          variant="destructive"
+                          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={() => removeImage(index)}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                        {index === 0 && (
+                          <Badge className="absolute bottom-2 left-2">Principal</Badge>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
             {currentStep === 3 && (
               <div className="space-y-6">
                 <div>
-                  <Label htmlFor="story">História Inicial</Label>
+                  <Label htmlFor="story">História do {profileData.name || "seu pet"}</Label>
                   <Textarea 
                     id="story"
                     placeholder="Conte a história do seu pet, como vocês se conheceram, momentos especiais..."
@@ -166,33 +350,22 @@ const CreateProfile = () => {
                     value={profileData.story}
                     onChange={(e) => setProfileData({...profileData, story: e.target.value})}
                   />
-                </div>
-
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div>
-                    <Label htmlFor="visibility" className="text-base">Perfil Público</Label>
-                    <p className="text-sm text-muted-foreground">
-                      Permite que outras pessoas encontrem e vejam o perfil
-                    </p>
-                  </div>
-                  <Switch 
-                    id="visibility"
-                    checked={profileData.isPublic}
-                    onCheckedChange={(checked) => setProfileData({...profileData, isPublic: checked})}
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="collaborators">Colaboradores (Emails)</Label>
-                  <Input 
-                    id="collaborators"
-                    placeholder="email1@exemplo.com, email2@exemplo.com"
-                    value={profileData.collaborators}
-                    onChange={(e) => setProfileData({...profileData, collaborators: e.target.value})}
-                  />
                   <p className="text-xs text-muted-foreground mt-1">
-                    Pessoas que poderão adicionar fotos e memórias ao perfil
+                    A história será visível no perfil público
                   </p>
+                </div>
+
+                <div className="p-4 border rounded-lg bg-muted/30">
+                  <h4 className="font-medium mb-2">Resumo do Perfil</h4>
+                  <div className="text-sm space-y-1 text-muted-foreground">
+                    <p><strong>Nome:</strong> {profileData.name || "—"}</p>
+                    <p><strong>Espécie:</strong> {profileData.species || "—"}</p>
+                    <p><strong>Raça:</strong> {profileData.breed || "—"}</p>
+                    <p><strong>Fotos:</strong> {selectedImages.length} selecionadas</p>
+                    {profileData.isDeceased && (
+                      <p className="text-primary"><strong>Memorial:</strong> Este perfil será adicionado ao céu 🌟</p>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
@@ -207,25 +380,28 @@ const CreateProfile = () => {
               </Button>
               
               <div className="space-x-2">
-                <Button variant="outline">
-                  <Save className="w-4 h-4 mr-2" />
-                  Salvar Rascunho
-                </Button>
-                
                 {currentStep < 3 ? (
-                  <Button onClick={() => setCurrentStep(Math.min(3, currentStep + 1))}>
+                  <Button 
+                    onClick={() => setCurrentStep(Math.min(3, currentStep + 1))}
+                    disabled={currentStep === 1 && (!profileData.name || !profileData.species)}
+                  >
                     Próximo
                   </Button>
                 ) : (
-                  <div className="space-x-2">
-                    <Button variant="memorial">
-                      Publicar Perfil
-                    </Button>
-                    <Button variant="outline">
-                      <Share2 className="w-4 h-4 mr-2" />
-                      Compartilhar
-                    </Button>
-                  </div>
+                  <Button 
+                    variant="memorial" 
+                    onClick={handlePublish}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Criando...
+                      </>
+                    ) : (
+                      "Publicar Perfil"
+                    )}
+                  </Button>
                 )}
               </div>
             </div>
