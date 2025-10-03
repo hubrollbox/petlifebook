@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
+import type { Pet, Memory } from "@/types/database";
 import dogZidane from "@/assets/pets/dog-zidane.jpg";
 import catMimi from "@/assets/pets/cat-mimi.jpg";
 import catMimi2 from "@/assets/pets/cat-mimi-2.jpg";
@@ -19,8 +20,8 @@ const PetProfile = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { toast } = useToast();
-  const [pet, setPet] = useState<any>(null);
-  const [memories, setMemories] = useState<any[]>([]);
+  const [pet, setPet] = useState<Pet | null>(null);
+  const [memories, setMemories] = useState<Memory[]>([]);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState("");
 

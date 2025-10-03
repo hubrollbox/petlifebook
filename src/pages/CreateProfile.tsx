@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Camera, Upload, Save, Share2, Loader2, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -13,13 +13,18 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
+interface ImagePreview {
+  file: File;
+  preview: string;
+}
+
 const CreateProfile = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [selectedImages, setSelectedImages] = useState<ImagePreview[]>([]);
   const [profileData, setProfileData] = useState({
     name: "",
     species: "",
@@ -30,6 +35,15 @@ const CreateProfile = () => {
     story: "",
     isDeceased: false
   });
+
+  // Cleanup URLs on unmount
+  useEffect(() => {
+    return () => {
+      selectedImages.forEach(img => {
+        URL.revokeObjectURL(img.preview);
+      });
+    };
+  }, []);
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -44,10 +58,17 @@ const CreateProfile = () => {
       return;
     }
     
-    setSelectedImages([...selectedImages, ...validImages]);
+    const newImages: ImagePreview[] = validImages.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }));
+    
+    setSelectedImages([...selectedImages, ...newImages]);
   };
 
   const removeImage = (index: number) => {
+    const imageToRemove = selectedImages[index];
+    URL.revokeObjectURL(imageToRemove.preview);
     setSelectedImages(selectedImages.filter((_, i) => i !== index));
   };
 
@@ -55,7 +76,7 @@ const CreateProfile = () => {
     if (selectedImages.length === 0) return null;
 
     try {
-      const mainImage = selectedImages[0];
+      const mainImage = selectedImages[0].file;
       const fileExt = mainImage.name.split('.').pop();
       const fileName = `${petId}/${Date.now()}.${fileExt}`;
 
@@ -317,7 +338,7 @@ const CreateProfile = () => {
                     {selectedImages.map((image, index) => (
                       <div key={index} className="relative group">
                         <img
-                          src={URL.createObjectURL(image)}
+                          src={image.preview}
                           alt={`Preview ${index + 1}`}
                           className="w-full h-32 object-cover rounded-lg"
                         />

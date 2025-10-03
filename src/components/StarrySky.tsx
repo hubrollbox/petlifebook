@@ -5,13 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Heart, Calendar, MapPin, Crown, Lock, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import type { Pet } from '@/types/database';
 
 
 const StarrySky = () => {
   const navigate = useNavigate();
-  const [pets, setPets] = useState<any[]>([]);
+  const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPet, setSelectedPet] = useState<any | null>(null);
+  const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const StarrySky = () => {
     }
   };
 
-  const handleStarClick = (pet: any) => {
+  const handleStarClick = (pet: Pet) => {
     setSelectedPet(pet);
     setIsModalOpen(true);
   };
@@ -122,7 +123,7 @@ const StarrySky = () => {
               <DialogHeader>
                 <div className="flex items-center justify-between">
                   <DialogTitle className="text-2xl font-bold">{selectedPet.name}</DialogTitle>
-                  {selectedPet.isPremium && (
+                  {selectedPet.is_premium && (
                     <Badge className="bg-memorial-gold text-memorial-gold-foreground">
                       <Crown className="w-4 h-4 mr-1" />
                       Premium

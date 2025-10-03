@@ -6,11 +6,13 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 import { Heart } from "lucide-react";
 
 const Auth = () => {
   const navigate = useNavigate();
   const { user, signIn, signUp } = useAuth();
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   // Login form
@@ -46,12 +48,20 @@ const Auth = () => {
     e.preventDefault();
     
     if (signupPassword !== signupConfirmPassword) {
-      alert("As senhas não coincidem!");
+      toast({
+        title: "Erro",
+        description: "As senhas não coincidem",
+        variant: "destructive"
+      });
       return;
     }
 
     if (signupPassword.length < 6) {
-      alert("A senha deve ter pelo menos 6 caracteres!");
+      toast({
+        title: "Erro",
+        description: "A senha deve ter pelo menos 6 caracteres",
+        variant: "destructive"
+      });
       return;
     }
 

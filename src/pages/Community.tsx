@@ -9,10 +9,11 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { Pet } from "@/types/database";
 
 const Community = () => {
   const navigate = useNavigate();
-  const [pets, setPets] = useState<any[]>([]);
+  const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
