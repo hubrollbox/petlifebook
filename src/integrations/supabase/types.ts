@@ -59,6 +59,20 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "fk_memories_pet_id"
+            columns: ["pet_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_memories_user_id"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "memories_pet_id_fkey"
             columns: ["pet_id"]
             isOneToOne: false
@@ -183,7 +197,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_pet_owner: {
+        Args: { _pet_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
