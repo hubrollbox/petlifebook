@@ -12,6 +12,9 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { validateImage, compressImage, createImagePreview, revokeImagePreview } from "@/lib/imageUtils";
+import { IMAGE_CONSTRAINTS, SPECIES_OPTIONS } from "@/lib/constants";
+import SEO from "@/components/SEO";
 
 interface ImagePreview {
   file: File;
@@ -45,30 +48,55 @@ const CreateProfile = () => {
     };
   }, []);
 
-  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    const validImages = files.filter(file => file.type.startsWith('image/'));
     
-    if (validImages.length + selectedImages.length > 10) {
+    if (files.length + selectedImages.length > IMAGE_CONSTRAINTS.MAX_FREE_IMAGES) {
       toast({
         title: "Limite excedido",
-        description: "Máximo de 10 fotos no plano gratuito",
+        description: `Máximo de ${IMAGE_CONSTRAINTS.MAX_FREE_IMAGES} fotos no plano gratuito`,
         variant: "destructive"
       });
       return;
     }
+
+    const processedImages: ImagePreview[] = [];
+
+    for (const file of files) {
+      // Validate image
+      const validationError = validateImage(file);
+      if (validationError) {
+        toast({
+          title: "Imagem inválida",
+          description: validationError.message,
+          variant: "destructive"
+        });
+        continue;
+      }
+
+      try {
+        // Compress image
+        const compressedFile = await compressImage(file);
+        processedImages.push({
+          file: compressedFile,
+          preview: createImagePreview(compressedFile)
+        });
+      } catch (error) {
+        console.error('Error processing image:', error);
+        toast({
+          title: "Erro ao processar imagem",
+          description: "Não foi possível processar uma das imagens",
+          variant: "destructive"
+        });
+      }
+    }
     
-    const newImages: ImagePreview[] = validImages.map(file => ({
-      file,
-      preview: URL.createObjectURL(file)
-    }));
-    
-    setSelectedImages([...selectedImages, ...newImages]);
+    setSelectedImages([...selectedImages, ...processedImages]);
   };
 
   const removeImage = (index: number) => {
     const imageToRemove = selectedImages[index];
-    URL.revokeObjectURL(imageToRemove.preview);
+    revokeImagePreview(imageToRemove.preview);
     setSelectedImages(selectedImages.filter((_, i) => i !== index));
   };
 
@@ -189,8 +217,13 @@ const CreateProfile = () => {
   ];
 
   return (
-    <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
-      <div className="container mx-auto max-w-4xl">
+    <>
+      <SEO 
+        title="Criar Perfil de Pet"
+        description="Crie um perfil memorial único para o seu pet. Adicione fotos, histórias e preserve memórias especiais."
+      />
+      <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="container mx-auto max-w-4xl">
         {/* Progress Steps */}
         <div className="flex justify-center mb-12">
           <div className="flex items-center space-x-8">
@@ -249,13 +282,9 @@ const CreateProfile = () => {
                         <SelectValue placeholder="Selecione a espécie" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Cão">Cão</SelectItem>
-                        <SelectItem value="Gato">Gato</SelectItem>
-                        <SelectItem value="Pássaro">Pássaro</SelectItem>
-                        <SelectItem value="Peixe">Peixe</SelectItem>
-                        <SelectItem value="Hamster">Hamster</SelectItem>
-                        <SelectItem value="Coelho">Coelho</SelectItem>
-                        <SelectItem value="Outro">Outro</SelectItem>
+                        {SPECIES_OPTIONS.map(species => (
+                          <SelectItem key={species} value={species}>{species}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -428,8 +457,9 @@ const CreateProfile = () => {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

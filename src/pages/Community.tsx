@@ -1,42 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageSquare, Plus, ThumbsUp, Search, Users, Heart, Loader2, Calendar, MapPin } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Plus, Search, Users, Heart, Loader2, Calendar, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { Pet } from "@/types/database";
+import { usePets } from "@/hooks/usePets";
+import { PAGINATION } from "@/lib/constants";
+import SEO from "@/components/SEO";
+import { SkeletonCard } from "@/components/ui/skeleton-loader";
 
 const Community = () => {
   const navigate = useNavigate();
-  const [pets, setPets] = useState<Pet[]>([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    loadPets();
-  }, []);
-
-  const loadPets = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('pets')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(20);
-
-      if (error) throw error;
-      setPets(data || []);
-    } catch (error) {
-      console.error('Error loading pets:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { pets, loading } = usePets({ limit: PAGINATION.PETS_PER_PAGE });
 
   const filteredPets = pets.filter(pet => 
     pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -44,8 +21,13 @@ const Community = () => {
   );
 
   return (
-    <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
-      <div className="container mx-auto max-w-6xl">
+    <>
+      <SEO 
+        title="Comunidade"
+        description="Conheça os pets que fazem parte da nossa comunidade e as suas histórias únicas"
+      />
+      <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -108,8 +90,10 @@ const Community = () => {
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-6">
             {loading ? (
-              <div className="flex justify-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <SkeletonCard key={i} />
+                ))}
               </div>
             ) : filteredPets.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -176,8 +160,9 @@ const Community = () => {
             )}
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

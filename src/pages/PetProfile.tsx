@@ -9,11 +9,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Textarea } from "@/components/ui/textarea";
-import type { Pet, Memory } from "@/types/database";
-import dogZidane from "@/assets/pets/dog-zidane.jpg";
-import catMimi from "@/assets/pets/cat-mimi.jpg";
-import catMimi2 from "@/assets/pets/cat-mimi-2.jpg";
+import { useMemories } from "@/hooks/useMemories";
+import type { Pet } from "@/types/database";
+import SEO from "@/components/SEO";
+import { SkeletonProfile } from "@/components/ui/skeleton-loader";
 
 const PetProfile = () => {
   const { id } = useParams();
@@ -21,14 +20,15 @@ const PetProfile = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [pet, setPet] = useState<Pet | null>(null);
-  const [memories, setMemories] = useState<Memory[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newMessage, setNewMessage] = useState("");
+  
+  const { memories, loading: memoriesLoading } = useMemories({ 
+    petId: id || '', 
+  });
 
   useEffect(() => {
     if (id) {
       loadPetData();
-      loadMemories();
     }
   }, [id]);
 
@@ -54,29 +54,10 @@ const PetProfile = () => {
     }
   };
 
-  const loadMemories = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('memories')
-        .select('*')
-        .eq('pet_id', id)
-        .order('memory_date', { ascending: false });
-
-      if (error) throw error;
-      setMemories(data || []);
-    } catch (error: any) {
-      console.error('Error loading memories:', error);
-    }
-  };
-
   const isOwner = user && pet && user.id === pet.owner_id;
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
+    return <SkeletonProfile />;
   }
 
   if (!pet) {
@@ -105,7 +86,14 @@ const PetProfile = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <>
+      <SEO 
+        title={`${pet.name} - Perfil Memorial`}
+        description={pet.story || `Memorial de ${pet.name}, um ${pet.breed || 'animal'} muito amado.`}
+        image={pet.profile_image_url}
+        type="profile"
+      />
+      <div className="min-h-screen">
       {/* Cover Photo & Profile Header */}
       <div className="relative h-80 bg-gradient-to-r from-primary-soft to-secondary-soft">
         <div className="absolute inset-0 bg-black/20" />
@@ -324,8 +312,9 @@ const PetProfile = () => {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
