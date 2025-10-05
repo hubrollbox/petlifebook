@@ -4,10 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import heroImage from "@/assets/starry-sky-hero.jpg";
 import StarrySky from "@/components/StarrySky";
+import SEO from "@/components/SEO";
 
 const Home = () => {
   return (
-    <div className="min-h-screen">
+    <>
+      <SEO />
+      <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div 
@@ -424,7 +427,8 @@ const Home = () => {
           </Button>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 
