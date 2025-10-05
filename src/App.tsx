@@ -15,6 +15,7 @@ import { Loader2 } from "lucide-react";
 const Home = lazy(() => import("./pages/Home"));
 const Demo = lazy(() => import("./pages/Demo"));
 const Auth = lazy(() => import("./pages/Auth"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 const CreateProfile = lazy(() => import("./pages/CreateProfile"));
 const PetProfile = lazy(() => import("./pages/PetProfile"));
 const Shop = lazy(() => import("./pages/Shop"));
@@ -57,6 +58,14 @@ const App = () => (
                     <Route path="/" element={<Home />} />
                     <Route path="/demo" element={<Demo />} />
                     <Route path="/auth" element={<Auth />} />
+                    <Route 
+                      path="/dashboard" 
+                      element={
+                        <ProtectedRoute>
+                          <Dashboard />
+                        </ProtectedRoute>
+                      } 
+                    />
                     <Route 
                       path="/criar-perfil" 
                       element={

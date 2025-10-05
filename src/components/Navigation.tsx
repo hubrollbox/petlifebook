@@ -80,8 +80,11 @@ const Navigation = () => {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                      Dashboard
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => navigate("/criar-perfil")}>
-                      Meus Pets
+                      Adicionar Pet
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => navigate("/planos")}>
                       Planos
@@ -167,6 +170,16 @@ const Navigation = () => {
                     <div className="text-sm text-muted-foreground px-2">
                       {user.email}
                     </div>
+                    <Button 
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        navigate("/dashboard");
+                        setIsOpen(false);
+                      }}
+                    >
+                      Dashboard
+                    </Button>
                     <Button 
                       size="sm" 
                       className="bg-gradient-to-r from-primary to-secondary"
