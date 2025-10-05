@@ -194,7 +194,17 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      pet_stats: {
+        Row: {
+          deceased_pets: number | null
+          latest_pet_created: string | null
+          living_pets: number | null
+          premium_pets: number | null
+          total_pets: number | null
+          total_users: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       is_pet_owner: {
