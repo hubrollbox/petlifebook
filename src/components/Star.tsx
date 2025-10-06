@@ -43,7 +43,8 @@ const Star = ({ pet, position }: StarProps) => {
     }
   });
 
-  const handleClick = () => {
+  const handleClick = (e: any) => {
+    e.stopPropagation();
     navigate(`/pet/${pet.id}`);
   };
 
@@ -52,8 +53,14 @@ const Star = ({ pet, position }: StarProps) => {
       ref={meshRef}
       position={position}
       onClick={handleClick}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
+      onPointerOver={(e) => {
+        e.stopPropagation();
+        setHovered(true);
+      }}
+      onPointerOut={(e) => {
+        e.stopPropagation();
+        setHovered(false);
+      }}
     >
       <sphereGeometry args={[0.08, 16, 16]} />
       <meshStandardMaterial

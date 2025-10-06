@@ -1,270 +1,208 @@
-import { useState } from "react";
-import { Heart, Calendar, MapPin, MessageCircle, Share2, Camera, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import dogZidane from "@/assets/pets/dog-zidane.jpg";
-import catMimi from "@/assets/pets/cat-mimi.jpg";
-import catMimi2 from "@/assets/pets/cat-mimi-2.jpg";
+import { BookOpen, Upload, Share2, FileText, Heart, Star, Camera, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
 
 const Demo = () => {
-  const [activeTab, setActiveTab] = useState("timeline");
-
-  const memories = [
-    {
-      id: 1,
-      type: "photo",
-      date: "15 de março, 2024",
-      title: "Primeiro dia em casa",
-      content: "Max chegou em casa hoje! Estava um pouco assustado, mas logo se sentiu em família.",
-      image: catMimi,
-      likes: 12,
-      comments: 3
-    },
-    {
-      id: 2,
-      type: "video",
-      date: "22 de março, 2024", 
-      title: "Aprendendo a sentar",
-      content: "Olha só como o Max está esperto! Já consegue sentar e dar a patinha.",
-      likes: 8,
-      comments: 2
-    },
-    {
-      id: 3,
-      type: "photo",
-      date: "5 de abril, 2024",
-      title: "Passeio no parque",
-      content: "Primeiro passeio no parque. Max adorou correr e brincar com outros cães!",
-      image: catMimi2,
-      likes: 15,
-      comments: 5
-    }
-  ];
-
   return (
-    <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-4xl">
-        {/* Pet Profile Header */}
-        <Card className="mb-8 overflow-hidden">
-          <div 
-            className="h-48 bg-cover bg-center relative"
-            style={{ backgroundImage: `url(${dogZidane})` }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <Badge className="absolute top-4 right-4 bg-memorial-gold text-white">
-              Exemplo
-            </Badge>
-          </div>
-          
-          <CardContent className="p-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-              <div>
-                <h1 className="text-3xl font-bold mb-2 flex items-center">
-                  Max
-                  <Heart className="w-6 h-6 text-primary fill-primary/20 ml-3" />
-                </h1>
-                <p className="text-muted-foreground text-lg">Golden Retriever</p>
-              </div>
-              
-              <div className="flex gap-3 mt-4 md:mt-0">
-                <Button variant="outline" size="sm">
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Compartilhar
-                </Button>
-                <Button variant="memorial" size="sm">
-                  <Heart className="w-4 h-4 mr-2" />
-                  Seguir Memorial
-                </Button>
-              </div>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <div className="flex items-center">
-                <Calendar className="w-5 h-5 text-primary mr-3" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Nascimento</p>
-                  <p className="font-medium">15 Jan 2022</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center">
-                <MapPin className="w-5 h-5 text-primary mr-3" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Local</p>
-                  <p className="font-medium">São Paulo, SP</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center">
-                <Heart className="w-5 h-5 text-primary mr-3" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Tutor</p>
-                  <p className="font-medium">Ana Silva</p>
-                </div>
-              </div>
-            </div>
-            
-            <p className="text-foreground/80 leading-relaxed">
-              Max era um golden retriever cheio de energia e amor. Adorava correr no parque, 
-              brincar com sua bolinha vermelha favorita e receber carinho de toda a família. 
-              Sempre foi um companheiro leal e trouxe muita alegria para nossas vidas.
+    <>
+      <SEO 
+        title="Como Funciona - PetLifeBook"
+        description="Aprenda como criar e partilhar o memorial digital do seu pet em passos simples."
+      />
+      <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-background to-muted/30">
+        <div className="container mx-auto max-w-6xl">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Como Funciona o PetLifeBook
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Criar o memorial digital do seu pet é simples e rápido. 
+              Siga estes passos e eternize as memórias mais preciosas.
             </p>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Navigation Tabs */}
-        <Card className="mb-8">
-          <CardContent className="p-6">
-            <div className="flex flex-wrap gap-4">
-              <Button 
-                variant={activeTab === "timeline" ? "memorial" : "outline"}
-                onClick={() => setActiveTab("timeline")}
-                size="sm"
-              >
-                <Camera className="w-4 h-4 mr-2" />
-                Timeline de Memórias
-              </Button>
-              <Button 
-                variant={activeTab === "community" ? "memorial" : "outline"}
-                onClick={() => setActiveTab("community")}
-                size="sm"
-              >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Mensagens da Comunidade
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+          {/* Steps */}
+          <div className="grid md:grid-cols-4 gap-8 mb-20">
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mb-4">
+                  <BookOpen className="w-8 h-8 text-white" />
+                </div>
+                <CardTitle>1. Crie o Perfil</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Comece por criar o perfil do seu pet com informações básicas: nome, espécie, raça e datas importantes.
+                </p>
+              </CardContent>
+            </Card>
 
-        {/* Timeline Content */}
-        {activeTab === "timeline" && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold mb-2">Timeline de Memórias</h2>
-              <p className="text-muted-foreground">
-                Todas as memórias especiais do Max organizadas cronologicamente
-              </p>
-            </div>
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-16 h-16 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center mb-4">
+                  <Upload className="w-8 h-8 text-white" />
+                </div>
+                <CardTitle>2. Adicione Memórias</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Carregue fotos, vídeos e adicione histórias especiais. Crie uma timeline de momentos inesquecíveis.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-16 h-16 bg-gradient-to-r from-accent to-memorial-gold rounded-full flex items-center justify-center mb-4">
+                  <Share2 className="w-8 h-8 text-white" />
+                </div>
+                <CardTitle>3. Partilhe</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Partilhe o memorial com família e amigos ou mantenha privado. Você decide quem pode ver.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-memorial transition-all duration-300">
+              <CardHeader>
+                <div className="mx-auto w-16 h-16 bg-gradient-to-r from-memorial-gold to-primary rounded-full flex items-center justify-center mb-4">
+                  <FileText className="w-8 h-8 text-white" />
+                </div>
+                <CardTitle>4. Preserve</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  As memórias ficam guardadas para sempre. No céu de estrelas, cada pet brilha eternamente.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Features Detail */}
+          <div className="mb-20">
+            <h2 className="text-3xl font-bold text-center mb-12">
+              Recursos Disponíveis
+            </h2>
             
-            {memories.map((memory, index) => (
-              <Card key={memory.id} className="hover:shadow-memorial transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-4">
+            <div className="grid md:grid-cols-2 gap-8">
+              <Card>
+                <CardContent className="p-8">
+                  <div className="flex items-start mb-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                      <Camera className="w-6 h-6 text-primary" />
+                    </div>
                     <div>
-                      <h3 className="text-lg font-semibold mb-1">{memory.title}</h3>
-                      <p className="text-sm text-muted-foreground">{memory.date}</p>
+                      <h3 className="text-xl font-semibold mb-2">Timeline de Memórias</h3>
+                      <p className="text-muted-foreground">
+                        Organize todas as fotos, vídeos e histórias numa linha temporal. 
+                        Reviva os momentos mais especiais de forma cronológica.
+                      </p>
                     </div>
-                    <div className="flex items-center">
-                      {memory.type === "photo" ? (
-                        <Camera className="w-5 h-5 text-primary" />
-                      ) : (
-                        <Video className="w-5 h-5 text-primary" />
-                      )}
-                    </div>
-                  </div>
-                  
-                  {memory.image && (
-                    <img 
-                      src={memory.image}
-                      alt={memory.title}
-                      className="w-full h-64 object-cover rounded-lg mb-4"
-                    />
-                  )}
-                  
-                  <p className="text-foreground/80 mb-4">{memory.content}</p>
-                  
-                  <Separator className="mb-4" />
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <Button variant="ghost" size="sm">
-                        <Heart className="w-4 h-4 mr-2" />
-                        {memory.likes}
-                      </Button>
-                      <Button variant="ghost" size="sm">
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        {memory.comments}
-                      </Button>
-                    </div>
-                    
-                    <Button variant="ghost" size="sm">
-                      <Share2 className="w-4 h-4 mr-2" />
-                      Compartilhar
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        )}
 
-        {/* Community Content */}
-        {activeTab === "community" && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold mb-2">Mensagens da Comunidade</h2>
-              <p className="text-muted-foreground">
-                Apoio e carinho de outros tutores que entendem sua dor
-              </p>
+              <Card>
+                <CardContent className="p-8">
+                  <div className="flex items-start mb-4">
+                    <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                      <Star className="w-6 h-6 text-secondary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">Céu de Estrelas</h3>
+                      <p className="text-muted-foreground">
+                        Cada pet falecido torna-se uma estrela no céu coletivo. 
+                        Um espaço lindo e emocional para homenagear todos os animais.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-8">
+                  <div className="flex items-start mb-4">
+                    <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                      <Heart className="w-6 h-6 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">Plano Gratuito</h3>
+                      <p className="text-muted-foreground">
+                        Crie memoriais para pets falecidos gratuitamente. 
+                        Até 3 pets com espaço para guardar fotos e histórias.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-8">
+                  <div className="flex items-start mb-4">
+                    <div className="w-12 h-12 bg-memorial-gold/10 rounded-lg flex items-center justify-center mr-4 shrink-0">
+                      <Clock className="w-6 h-6 text-memorial-gold" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">Plano Premium</h3>
+                      <p className="text-muted-foreground">
+                        Acompanhe pets vivos com ferramentas de saúde, vacinas e lembretes. 
+                        Perfis ilimitados e armazenamento sem limites.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-            
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4 mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
-                    <Heart className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold">Maria Santos</h4>
-                    <p className="text-sm text-muted-foreground">Há 2 dias</p>
-                  </div>
-                </div>
-                <p className="text-foreground/80">
-                  "Max parecia ser um companheiro incrível! Pelas fotos dá para ver 
-                  toda a alegria que ele trazia. Sei que vocês criaram memórias lindas juntos. 💙"
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4 mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center">
-                    <Heart className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold">Carlos Mendes</h4>
-                    <p className="text-sm text-muted-foreground">Há 3 dias</p>
-                  </div>
-                </div>
-                <p className="text-foreground/80">
-                  "Que memorial lindo! Os golden retrievers têm um lugar muito especial 
-                  no meu coração. Max certamente foi muito amado e isso fica claro em cada foto. ❤️"
-                </p>
-              </CardContent>
-            </Card>
           </div>
-        )}
 
-        {/* CTA Section */}
-        <Card className="mt-12 bg-gradient-to-r from-primary-soft to-secondary-soft border-0">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">
-              Gostou do que viu? Crie o memorial do seu pet
-            </h2>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Comece gratuitamente e eternize as memórias mais preciosas do seu companheiro. 
-              É rápido, fácil e feito com muito carinho.
-            </p>
-            <Button variant="memorial" size="lg">
-              Criar Meu Memorial Grátis
-            </Button>
-          </CardContent>
-        </Card>
+          {/* Example Preview */}
+          <Card className="mb-12 bg-gradient-to-br from-primary/5 to-secondary/5">
+            <CardContent className="p-12 text-center">
+              <h2 className="text-3xl font-bold mb-4">
+                Veja um Exemplo Real
+              </h2>
+              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+                Explore como fica um memorial completo. Veja fotos, histórias e a timeline de memórias.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" variant="outline" asChild>
+                  <Link to="/">Ver Céu de Estrelas</Link>
+                </Button>
+                <Button size="lg" asChild>
+                  <Link to="/planos">Ver Planos</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* CTA Final */}
+          <Card className="bg-gradient-to-r from-primary to-secondary text-white border-0">
+            <CardContent className="p-12 text-center">
+              <h2 className="text-3xl font-bold mb-4">
+                Comece Agora Gratuitamente
+              </h2>
+              <p className="text-white/90 mb-8 max-w-2xl mx-auto">
+                Não espere mais. Crie o memorial do seu pet em minutos e 
+                guarde as memórias mais preciosas para sempre.
+              </p>
+              <Button 
+                size="lg" 
+                variant="secondary"
+                className="bg-white text-primary hover:bg-white/90"
+                asChild
+              >
+                <Link to="/criar-perfil">Criar Memorial Grátis</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

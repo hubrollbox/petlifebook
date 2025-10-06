@@ -32,18 +32,8 @@ const Navigation = () => {
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="p-2 rounded-full bg-gradient-to-r from-primary to-secondary group-hover:shadow-memorial transition-all duration-300">
-              <Heart className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              PetMemorial
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation - centered */}
+          <div className="hidden md:flex items-center space-x-8 mx-auto">
             <Link
               to="/"
               className={`text-sm font-medium transition-colors hover:text-primary ${
@@ -120,8 +110,8 @@ const Navigation = () => {
             )}
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile menu button - absolute positioned to right */}
+          <div className="md:hidden absolute right-4">
             <Button
               variant="ghost"
               size="sm"

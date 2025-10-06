@@ -107,6 +107,7 @@ const StarrySkyHome = () => {
             autoRotateSpeed={0.3}
             minDistance={10}
             maxDistance={40}
+            makeDefault
           />
         </Suspense>
       </Canvas>
