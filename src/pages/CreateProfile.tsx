@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/contexts/SubscriptionContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { validateImage, compressImage, createImagePreview, revokeImagePreview } from "@/lib/imageUtils";
@@ -23,6 +24,7 @@ interface ImagePreview {
 
 const CreateProfile = () => {
   const { user } = useAuth();
+  const { planType, loading: subLoading } = useSubscription();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
@@ -141,6 +143,19 @@ const CreateProfile = () => {
         description: "A espécie do animal é obrigatória",
         variant: "destructive"
       });
+      return false;
+    }
+
+    // Verificar restrições de plano gratuito
+    if (planType === 'free' && !profileData.isDeceased) {
+      toast({
+        title: "Funcionalidade Premium",
+        description: "No plano gratuito, só pode criar memoriais para pets falecidos. Faça upgrade para criar perfis de pets vivos.",
+        variant: "destructive",
+      });
+      setTimeout(() => {
+        navigate('/planos');
+      }, 2000);
       return false;
     }
 
@@ -322,13 +337,22 @@ const CreateProfile = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="deathDate">Data de Falecimento (Opcional)</Label>
+                    <Label htmlFor="deathDate">
+                      Data de Falecimento 
+                      {planType === 'free' ? ' (Obrigatório - Plano Gratuito)' : ' (Opcional)'}
+                    </Label>
                     <Input 
                       id="deathDate" 
                       type="date"
                       value={profileData.deathDate}
                       onChange={(e) => setProfileData({...profileData, deathDate: e.target.value, isDeceased: !!e.target.value})}
+                      required={planType === 'free'}
                     />
+                    {planType === 'free' && (
+                      <p className="text-sm text-muted-foreground mt-1">
+                        🔒 Plano gratuito permite apenas memoriais (pets falecidos)
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

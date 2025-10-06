@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { lazy, Suspense } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
+import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import Navigation from "./components/Navigation";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -48,13 +49,14 @@ const App = () => (
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <AuthProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <div className="min-h-screen bg-background">
-                <Navigation />
-                <Suspense fallback={<PageLoader />}>
-                  <Routes>
+            <SubscriptionProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <div className="min-h-screen bg-background">
+                  <Navigation />
+                  <Suspense fallback={<PageLoader />}>
+                    <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/demo" element={<Demo />} />
                     <Route path="/auth" element={<Auth />} />
@@ -81,10 +83,11 @@ const App = () => (
                     <Route path="/sobre" element={<About />} />
                     <Route path="/planos" element={<Plans />} />
                     <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Suspense>
-              </div>
-            </BrowserRouter>
+                    </Routes>
+                  </Suspense>
+                </div>
+              </BrowserRouter>
+            </SubscriptionProvider>
           </AuthProvider>
         </TooltipProvider>
       </QueryClientProvider>

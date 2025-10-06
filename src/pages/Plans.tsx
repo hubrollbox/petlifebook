@@ -6,27 +6,25 @@ import { Check, X, Crown, Heart } from "lucide-react";
 const Plans = () => {
   const features = {
     free: [
-      "Criação de perfil de pets",
-      "Upload de até 10 fotos",
-      "Upload de até 2 vídeos",
-      "Timeline básica",
-      "Partilha de histórias",
-      "Acesso ao blog",
-      "Participação na comunidade"
+      "Memorial para pets falecidos",
+      "Máximo de 3 pets",
+      "Timeline básica de memórias",
+      "Armazenamento limitado",
+      "Partilha de perfil público",
+      "Estrela no Céu de Estrelas",
     ],
     premium: [
-      "Tudo do plano gratuito",
-      "Upload ilimitado de fotos e vídeos",
-      "Personalização avançada de perfis",
-      "Templates exclusivos",
-      "Diário digital do pet",
-      "Marcos automáticos (aniversários, vacinas)",
-      "Criação de livros de memória",
-      "Export em PDF profissional",
-      "Integração com redes sociais",
+      "Pets vivos e falecidos",
+      "Perfis ilimitados",
+      "Timeline completa e expandida",
+      "Armazenamento ilimitado",
+      "Diário de saúde e lembretes",
+      "Controlo de vacinas",
+      "Acompanhamento veterinário",
+      "Ferramentas avançadas",
+      "Sem anúncios",
       "Suporte prioritário",
-      "Produtos físicos com desconto"
-    ]
+    ],
   };
 
   return (
@@ -50,11 +48,11 @@ const Plans = () => {
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart className="w-8 h-8 text-primary" />
               </div>
-              <CardTitle className="text-2xl font-bold">Gratuito</CardTitle>
+              <CardTitle className="text-2xl font-bold">Gratuito (Memorial)</CardTitle>
               <div className="text-3xl font-bold text-foreground mt-4">
-                €0<span className="text-sm font-normal text-muted-foreground">/mês</span>
+                €0<span className="text-sm font-normal text-muted-foreground">/sempre</span>
               </div>
-              <p className="text-muted-foreground mt-2">Para começar a sua jornada</p>
+              <p className="text-muted-foreground mt-2">Crie um memorial eterno para o seu pet falecido</p>
             </CardHeader>
             
             <CardContent className="space-y-6">
@@ -84,11 +82,11 @@ const Plans = () => {
               <div className="w-16 h-16 bg-memorial-gold/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Crown className="w-8 h-8 text-memorial-gold" />
               </div>
-              <CardTitle className="text-2xl font-bold">Premium</CardTitle>
+              <CardTitle className="text-2xl font-bold">Premium (Acesso Total)</CardTitle>
               <div className="text-3xl font-bold text-foreground mt-4">
-                €9.99<span className="text-sm font-normal text-muted-foreground">/mês</span>
+                €4.99<span className="text-sm font-normal text-muted-foreground">/mês</span>
               </div>
-              <p className="text-muted-foreground mt-2">Celebre cada momento especial</p>
+              <p className="text-muted-foreground mt-2">Acompanhe a vida e a memória dos seus pets com ferramentas completas</p>
             </CardHeader>
             
             <CardContent className="space-y-6">
@@ -102,11 +100,11 @@ const Plans = () => {
               </ul>
               
               <Button className="w-full bg-memorial-gold hover:bg-memorial-gold/90 text-memorial-gold-foreground" size="lg">
-                Começar Premium
+                Fazer Upgrade para Premium
               </Button>
               
               <p className="text-center text-xs text-muted-foreground">
-                Primeiro mês gratuito • Cancele a qualquer momento
+                Cancele a qualquer momento
               </p>
             </CardContent>
           </Card>
@@ -141,11 +139,11 @@ const Plans = () => {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Existe limite de pets no plano gratuito?</CardTitle>
+                <CardTitle className="text-lg">Posso ter pets vivos no plano gratuito?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Não! Pode criar perfis para todos os seus pets em qualquer plano. O limite é apenas no armazenamento de fotos e vídeos.
+                  O plano gratuito é exclusivo para memoriais de pets falecidos. Para criar perfis de pets vivos e aceder a todas as funcionalidades, faça upgrade para Premium.
                 </p>
               </CardContent>
             </Card>

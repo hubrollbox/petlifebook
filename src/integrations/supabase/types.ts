@@ -207,8 +207,16 @@ export type Database = {
       }
     }
     Functions: {
+      count_user_pets: {
+        Args: { _user_id: string }
+        Returns: number
+      }
       is_pet_owner: {
         Args: { _pet_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_premium_user: {
+        Args: { _user_id: string }
         Returns: boolean
       }
     }
