@@ -14,6 +14,99 @@ export type Database = {
   }
   public: {
     Tables: {
+      health_records: {
+        Row: {
+          created_at: string | null
+          id: string
+          notes: string | null
+          pet_id: string | null
+          record_date: string
+          record_type: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          pet_id?: string | null
+          record_date: string
+          record_type: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          pet_id?: string | null
+          record_date?: string
+          record_type?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "health_records_pet_id_fkey"
+            columns: ["pet_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      litters: {
+        Row: {
+          birth_date: string
+          breeder_id: string | null
+          created_at: string | null
+          dam_id: string | null
+          id: string
+          name: string | null
+          sire_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          birth_date: string
+          breeder_id?: string | null
+          created_at?: string | null
+          dam_id?: string | null
+          id?: string
+          name?: string | null
+          sire_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          birth_date?: string
+          breeder_id?: string | null
+          created_at?: string | null
+          dam_id?: string | null
+          id?: string
+          name?: string | null
+          sire_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "litters_breeder_id_fkey"
+            columns: ["breeder_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "litters_dam_id_fkey"
+            columns: ["dam_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "litters_sire_id_fkey"
+            columns: ["sire_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       memories: {
         Row: {
           comments_count: number
@@ -91,10 +184,12 @@ export type Database = {
           id: string
           is_deceased: boolean
           is_premium: boolean
+          litter_id: string | null
           location: string | null
           name: string
           owner_id: string
           profile_image_url: string | null
+          status: string
           story: string | null
           updated_at: string
         }
@@ -107,10 +202,12 @@ export type Database = {
           id?: string
           is_deceased?: boolean
           is_premium?: boolean
+          litter_id?: string | null
           location?: string | null
           name: string
           owner_id: string
           profile_image_url?: string | null
+          status?: string
           story?: string | null
           updated_at?: string
         }
@@ -123,39 +220,64 @@ export type Database = {
           id?: string
           is_deceased?: boolean
           is_premium?: boolean
+          litter_id?: string | null
           location?: string | null
           name?: string
           owner_id?: string
           profile_image_url?: string | null
+          status?: string
           story?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fk_litter"
+            columns: ["litter_id"]
+            isOneToOne: false
+            referencedRelation: "litters"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
           avatar_url: string | null
+          business_name: string | null
+          contact_email: string | null
           created_at: string
           display_name: string | null
           email: string | null
           id: string
+          location: string | null
           updated_at: string
+          user_type: string
+          website: string | null
         }
         Insert: {
           avatar_url?: string | null
+          business_name?: string | null
+          contact_email?: string | null
           created_at?: string
           display_name?: string | null
           email?: string | null
           id: string
+          location?: string | null
           updated_at?: string
+          user_type?: string
+          website?: string | null
         }
         Update: {
           avatar_url?: string | null
+          business_name?: string | null
+          contact_email?: string | null
           created_at?: string
           display_name?: string | null
           email?: string | null
           id?: string
+          location?: string | null
           updated_at?: string
+          user_type?: string
+          website?: string | null
         }
         Relationships: []
       }

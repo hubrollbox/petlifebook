@@ -15,6 +15,8 @@ export interface Pet {
   is_premium: boolean;
   created_at: string;
   updated_at: string;
+  status?: string;
+  litter_id?: string;
 }
 
 export interface Memory {
@@ -37,6 +39,11 @@ export interface Profile {
   display_name?: string;
   email?: string;
   avatar_url?: string;
+  user_type: 'individual' | 'professional';
+  business_name?: string;
+  website?: string;
+  location?: string;
+  contact_email?: string;
   created_at: string;
   updated_at: string;
 }

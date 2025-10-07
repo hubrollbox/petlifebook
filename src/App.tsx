@@ -10,6 +10,7 @@ import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import Navigation from "./components/Navigation";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ProfessionalRoute from "./components/ProfessionalRoute";
 import { Loader2 } from "lucide-react";
 
 // Lazy load pages for better performance
@@ -17,6 +18,8 @@ const Home = lazy(() => import("./pages/Home"));
 const Demo = lazy(() => import("./pages/Demo"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const ProfessionalDashboard = lazy(() => import("./pages/ProfessionalDashboard"));
+const DashboardRedirect = lazy(() => import("./components/DashboardRedirect"));
 const CreateProfile = lazy(() => import("./pages/CreateProfile"));
 const PetProfile = lazy(() => import("./pages/PetProfile"));
 const Shop = lazy(() => import("./pages/Shop"));
@@ -57,32 +60,48 @@ const App = () => (
                   <Navigation />
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/como-funciona" element={<Demo />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route 
-                      path="/dashboard" 
-                      element={
-                        <ProtectedRoute>
-                          <Dashboard />
-                        </ProtectedRoute>
-                      } 
-                    />
-                    <Route 
-                      path="/criar-perfil" 
-                      element={
-                        <ProtectedRoute>
-                          <CreateProfile />
-                        </ProtectedRoute>
-                      } 
-                    />
-                    <Route path="/pet/:id" element={<PetProfile />} />
-                    <Route path="/loja" element={<Shop />} />
-                    <Route path="/blog" element={<Blog />} />
-                    <Route path="/comunidade" element={<Community />} />
-                    <Route path="/sobre" element={<About />} />
-                    <Route path="/planos" element={<Plans />} />
-                    <Route path="*" element={<NotFound />} />
+                      <Route path="/" element={<Home />} />
+                      <Route path="/como-funciona" element={<Demo />} />
+                      <Route path="/auth" element={<Auth />} />
+                      <Route 
+                        path="/dashboard" 
+                        element={
+                          <ProtectedRoute>
+                            <Dashboard />
+                          </ProtectedRoute>
+                        } 
+                      />
+                      <Route 
+                        path="/pro/dashboard" 
+                        element={
+                          <ProfessionalRoute>
+                            <ProfessionalDashboard />
+                          </ProfessionalRoute>
+                        } 
+                      />
+                      <Route 
+                        path="/auto-dashboard" 
+                        element={
+                          <ProtectedRoute>
+                            <DashboardRedirect />
+                          </ProtectedRoute>
+                        } 
+                      />
+                      <Route 
+                        path="/criar-perfil" 
+                        element={
+                          <ProtectedRoute>
+                            <CreateProfile />
+                          </ProtectedRoute>
+                        } 
+                      />
+                      <Route path="/pet/:id" element={<PetProfile />} />
+                      <Route path="/loja" element={<Shop />} />
+                      <Route path="/blog" element={<Blog />} />
+                      <Route path="/comunidade" element={<Community />} />
+                      <Route path="/sobre" element={<About />} />
+                      <Route path="/planos" element={<Plans />} />
+                      <Route path="*" element={<NotFound />} />
                     </Routes>
                   </Suspense>
                 </div>
