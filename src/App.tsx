@@ -57,8 +57,8 @@ const App = () => (
                   <Navigation />
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/demo" element={<Demo />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/como-funciona" element={<Demo />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route 
                       path="/dashboard" 

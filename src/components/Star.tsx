@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Mesh } from 'three';
+import * as THREE from 'three';
 import { useNavigate } from 'react-router-dom';
 import type { Pet } from '@/types/database';
 
@@ -10,7 +10,7 @@ interface StarProps {
 }
 
 const Star = ({ pet, position }: StarProps) => {
-  const meshRef = useRef<Mesh>(null);
+  const meshRef = useRef<THREE.Group>(null);
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
 
@@ -48,8 +48,26 @@ const Star = ({ pet, position }: StarProps) => {
     navigate(`/pet/${pet.id}`);
   };
 
+  // Star shape vertices
+  const starShape = () => {
+    const points = [];
+    const outerRadius = 0.15;
+    const innerRadius = 0.06;
+    
+    for (let i = 0; i < 10; i++) {
+      const radius = i % 2 === 0 ? outerRadius : innerRadius;
+      const angle = (i * Math.PI) / 5;
+      points.push(
+        radius * Math.cos(angle),
+        radius * Math.sin(angle),
+        0
+      );
+    }
+    return points;
+  };
+
   return (
-    <mesh
+    <group
       ref={meshRef}
       position={position}
       onClick={handleClick}
@@ -62,18 +80,43 @@ const Star = ({ pet, position }: StarProps) => {
         setHovered(false);
       }}
     >
-      <sphereGeometry args={[0.08, 16, 16]} />
-      <meshStandardMaterial
-        color={getColor()}
-        emissive={getColor()}
-        emissiveIntensity={brightness * 2}
-        transparent
-        opacity={0.9}
-      />
+      <mesh>
+        <extrudeGeometry
+          args={[
+            (() => {
+              const shape = new THREE.Shape();
+              const outerRadius = 0.15;
+              const innerRadius = 0.06;
+              
+              for (let i = 0; i < 10; i++) {
+                const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                const angle = (i * Math.PI) / 5 - Math.PI / 2;
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+                if (i === 0) {
+                  shape.moveTo(x, y);
+                } else {
+                  shape.lineTo(x, y);
+                }
+              }
+              shape.closePath();
+              return shape;
+            })(),
+            { depth: 0.05, bevelEnabled: true, bevelThickness: 0.01, bevelSize: 0.01 }
+          ]}
+        />
+        <meshStandardMaterial
+          color={getColor()}
+          emissive={getColor()}
+          emissiveIntensity={brightness * 2}
+          transparent
+          opacity={0.9}
+        />
+      </mesh>
       {hovered && (
-        <pointLight color={getColor()} intensity={2} distance={2} />
+        <pointLight color={getColor()} intensity={3} distance={3} />
       )}
-    </mesh>
+    </group>
   );
 };
 

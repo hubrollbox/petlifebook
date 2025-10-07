@@ -71,7 +71,7 @@ const StarrySkyHome = () => {
       {/* Canvas 3D */}
       <Canvas
         camera={{ position: [0, 0, 20], fov: 60 }}
-        style={{ background: 'linear-gradient(to bottom, #87CEEB, #E0F6FF)' }}
+        style={{ background: 'linear-gradient(to bottom, #0a0e27, #1a1f4d, #2a2f5f)' }}
       >
         <Suspense fallback={null}>
           {/* Iluminação */}

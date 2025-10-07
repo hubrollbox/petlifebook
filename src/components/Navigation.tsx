@@ -43,12 +43,12 @@ const Navigation = () => {
               Início
             </Link>
             <Link
-              to="/demo"
+              to="/como-funciona"
               className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive("/demo") ? "text-primary" : "text-foreground"
+                isActive("/como-funciona") ? "text-primary" : "text-foreground"
               }`}
             >
-              Ver Exemplo
+              Como Funciona
             </Link>
             <Link
               to="/planos"
@@ -137,13 +137,13 @@ const Navigation = () => {
                 Início
               </Link>
               <Link
-                to="/demo"
+                to="/como-funciona"
                 className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isActive("/demo") ? "text-primary" : "text-foreground"
+                  isActive("/como-funciona") ? "text-primary" : "text-foreground"
                 }`}
                 onClick={() => setIsOpen(false)}
               >
-                Ver Exemplo
+                Como Funciona
               </Link>
               <Link
                 to="/planos"
