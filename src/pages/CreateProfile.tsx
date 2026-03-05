@@ -108,7 +108,7 @@ const CreateProfile = () => {
     try {
       const mainImage = selectedImages[0].file;
       const fileExt = mainImage.name.split('.').pop();
-      const fileName = `${petId}/${Date.now()}.${fileExt}`;
+      const fileName = `${user!.id}/${petId}/${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from('pet-media')
