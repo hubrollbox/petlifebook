@@ -111,13 +111,13 @@ const CreateProfile = () => {
       const fileName = `${petId}/${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('pet-photos')
+        .from('pet-media')
         .upload(fileName, mainImage);
 
       if (uploadError) throw uploadError;
 
       const { data: { publicUrl } } = supabase.storage
-        .from('pet-photos')
+        .from('pet-media')
         .getPublicUrl(fileName);
 
       return publicUrl;
