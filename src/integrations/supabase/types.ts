@@ -10,37 +10,37 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.5"
+    PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
       health_records: {
         Row: {
-          created_at: string | null
+          created_at: string
           id: string
           notes: string | null
-          pet_id: string | null
+          pet_id: string
           record_date: string
           record_type: string
-          updated_at: string | null
+          updated_at: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           id?: string
           notes?: string | null
-          pet_id?: string | null
-          record_date: string
-          record_type: string
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: string
-          notes?: string | null
-          pet_id?: string | null
+          pet_id: string
           record_date?: string
           record_type?: string
-          updated_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          pet_id?: string
+          record_date?: string
+          record_type?: string
+          updated_at?: string
         }
         Relationships: [
           {
@@ -55,57 +55,35 @@ export type Database = {
       litters: {
         Row: {
           birth_date: string
-          breeder_id: string | null
-          created_at: string | null
+          breeder_id: string
+          created_at: string
           dam_id: string | null
           id: string
           name: string | null
           sire_id: string | null
-          updated_at: string | null
+          updated_at: string
         }
         Insert: {
           birth_date: string
-          breeder_id?: string | null
-          created_at?: string | null
+          breeder_id: string
+          created_at?: string
           dam_id?: string | null
           id?: string
           name?: string | null
           sire_id?: string | null
-          updated_at?: string | null
+          updated_at?: string
         }
         Update: {
           birth_date?: string
-          breeder_id?: string | null
-          created_at?: string | null
+          breeder_id?: string
+          created_at?: string
           dam_id?: string | null
           id?: string
           name?: string | null
           sire_id?: string | null
-          updated_at?: string | null
+          updated_at?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "litters_breeder_id_fkey"
-            columns: ["breeder_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "litters_dam_id_fkey"
-            columns: ["dam_id"]
-            isOneToOne: false
-            referencedRelation: "pets"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "litters_sire_id_fkey"
-            columns: ["sire_id"]
-            isOneToOne: false
-            referencedRelation: "pets"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       memories: {
         Row: {
@@ -130,7 +108,7 @@ export type Database = {
           likes_count?: number
           media_type?: string | null
           media_url?: string | null
-          memory_date: string
+          memory_date?: string
           pet_id: string
           title: string
           updated_at?: string
@@ -151,20 +129,6 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "fk_memories_pet_id"
-            columns: ["pet_id"]
-            isOneToOne: false
-            referencedRelation: "pets"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "fk_memories_user_id"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "memories_pet_id_fkey"
             columns: ["pet_id"]
@@ -189,7 +153,8 @@ export type Database = {
           name: string
           owner_id: string
           profile_image_url: string | null
-          status: string
+          species: string | null
+          status: string | null
           story: string | null
           updated_at: string
         }
@@ -207,7 +172,8 @@ export type Database = {
           name: string
           owner_id: string
           profile_image_url?: string | null
-          status?: string
+          species?: string | null
+          status?: string | null
           story?: string | null
           updated_at?: string
         }
@@ -225,13 +191,14 @@ export type Database = {
           name?: string
           owner_id?: string
           profile_image_url?: string | null
-          status?: string
+          species?: string | null
+          status?: string | null
           story?: string | null
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "fk_litter"
+            foreignKeyName: "pets_litter_id_fkey"
             columns: ["litter_id"]
             isOneToOne: false
             referencedRelation: "litters"
@@ -296,9 +263,9 @@ export type Database = {
           created_at?: string
           end_date?: string | null
           id?: string
-          plan_type: string
+          plan_type?: string
           start_date?: string
-          status: string
+          status?: string
           updated_at?: string
           user_id: string
         }
@@ -319,28 +286,20 @@ export type Database = {
       pet_stats: {
         Row: {
           deceased_pets: number | null
-          latest_pet_created: string | null
           living_pets: number | null
-          premium_pets: number | null
+          owner_id: string | null
           total_pets: number | null
-          total_users: number | null
         }
         Relationships: []
       }
     }
     Functions: {
-      count_user_pets: {
-        Args: { _user_id: string }
-        Returns: number
-      }
+      count_user_pets: { Args: { _user_id: string }; Returns: number }
       is_pet_owner: {
         Args: { _pet_id: string; _user_id: string }
         Returns: boolean
       }
-      is_premium_user: {
-        Args: { _user_id: string }
-        Returns: boolean
-      }
+      is_premium_user: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
