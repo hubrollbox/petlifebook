@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useMemories } from "@/hooks/useMemories";
+import AddMemoryDialog from "@/components/AddMemoryDialog";
 import type { Pet } from "@/types/database";
 import SEO from "@/components/SEO";
 import { SkeletonProfile } from "@/components/ui/skeleton-loader";
@@ -22,7 +23,8 @@ const PetProfile = () => {
   const [pet, setPet] = useState<Pet | null>(null);
   const [loading, setLoading] = useState(true);
   
-  const { memories, loading: memoriesLoading } = useMemories({ 
+  
+  const { memories, loading: memoriesLoading, refetch } = useMemories({ 
     petId: id || '', 
   });
 
@@ -54,7 +56,20 @@ const PetProfile = () => {
     }
   };
 
+
   const isOwner = user && pet && user.id === pet.owner_id;
+
+  const handleShare = async () => {
+    const url = `${window.location.origin}/pet/${id}`;
+    const shareData = { title: `${pet?.name} - PetLifeBook`, text: pet?.story || `Memorial de ${pet?.name}`, url };
+    
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch {}
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast({ title: "Link copiado!", description: "O link do perfil foi copiado para a área de transferência." });
+    }
+  };
 
   if (loading) {
     return <SkeletonProfile />;
@@ -139,13 +154,16 @@ const PetProfile = () => {
       <div className="container mx-auto max-w-4xl px-4 py-8">
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-3 mb-8">
+          {isOwner && (
+            <AddMemoryDialog petId={pet.id} onMemoryAdded={refetch} />
+          )}
           <Button variant="memorial">
             <Heart className="w-4 h-4 mr-2" />
             Seguir
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleShare}>
             <Share2 className="w-4 h-4 mr-2" />
-            Compartilhar
+            Partilhar
           </Button>
           <Button variant="outline">
             <FileDown className="w-4 h-4 mr-2" />
