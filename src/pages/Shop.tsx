@@ -38,7 +38,7 @@ const Shop = () => {
       id: 3,
       name: "Certificado de Vida Digital",
       description: "Documento oficial da jornada do seu pet",
-      price: "R$ 29,90",
+      price: "€ 9,90",
       image: "/placeholder.svg",
       category: "certificates",
       rating: 4.7,
