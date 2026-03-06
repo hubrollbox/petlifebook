@@ -56,9 +56,6 @@ const PetProfile = () => {
     }
   };
 
-  const { memories, loading: memoriesLoading, refetch } = useMemories({ 
-    petId: id || '', 
-  });
 
   const isOwner = user && pet && user.id === pet.owner_id;
 
