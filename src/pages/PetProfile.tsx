@@ -140,13 +140,16 @@ const PetProfile = () => {
       <div className="container mx-auto max-w-4xl px-4 py-8">
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-3 mb-8">
+          {isOwner && (
+            <AddMemoryDialog petId={pet.id} onMemoryAdded={refetch} />
+          )}
           <Button variant="memorial">
             <Heart className="w-4 h-4 mr-2" />
             Seguir
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleShare}>
             <Share2 className="w-4 h-4 mr-2" />
-            Compartilhar
+            Partilhar
           </Button>
           <Button variant="outline">
             <FileDown className="w-4 h-4 mr-2" />
