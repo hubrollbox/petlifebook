@@ -23,7 +23,8 @@ const PetProfile = () => {
   const [pet, setPet] = useState<Pet | null>(null);
   const [loading, setLoading] = useState(true);
   
-  const { memories, loading: memoriesLoading } = useMemories({ 
+  
+  const { memories, loading: memoriesLoading, refetch } = useMemories({ 
     petId: id || '', 
   });
 
