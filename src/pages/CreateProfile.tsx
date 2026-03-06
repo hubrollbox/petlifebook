@@ -183,6 +183,7 @@ const CreateProfile = () => {
         .insert({
           owner_id: user.id,
           name: profileData.name,
+          species: profileData.species || null,
           breed: profileData.breed || null,
           birth_date: profileData.birthDate || null,
           death_date: profileData.deathDate || null,

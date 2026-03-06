@@ -72,8 +72,8 @@ const Shop = () => {
     {
       id: 6,
       name: "Pendente com Cinzas",
-      description: "Joia comemorativa para guardar um pouco das cinzas",
-      price: "R$ 199,90",
+      description: "Joia memorial para guardar uma recordação especial",
+      price: "€ 49,90",
       image: "/placeholder.svg",
       category: "jewelry",
       rating: 4.9,
