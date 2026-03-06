@@ -27,7 +27,7 @@ const Shop = () => {
       id: 2,
       name: "Urna Biodegradável Ecológica",
       description: "Urna sustentável que se transforma em árvore",
-      price: "R$ 149,90",
+      price: "€ 39,90",
       image: "/placeholder.svg",
       category: "urns",
       rating: 4.9,
