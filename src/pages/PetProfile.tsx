@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useMemories } from "@/hooks/useMemories";
+import AddMemoryDialog from "@/components/AddMemoryDialog";
 import type { Pet } from "@/types/database";
 import SEO from "@/components/SEO";
 import { SkeletonProfile } from "@/components/ui/skeleton-loader";
