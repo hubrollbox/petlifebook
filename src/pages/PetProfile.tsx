@@ -55,7 +55,23 @@ const PetProfile = () => {
     }
   };
 
+  const { memories, loading: memoriesLoading, refetch } = useMemories({ 
+    petId: id || '', 
+  });
+
   const isOwner = user && pet && user.id === pet.owner_id;
+
+  const handleShare = async () => {
+    const url = `${window.location.origin}/pet/${id}`;
+    const shareData = { title: `${pet?.name} - PetLifeBook`, text: pet?.story || `Memorial de ${pet?.name}`, url };
+    
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch {}
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast({ title: "Link copiado!", description: "O link do perfil foi copiado para a área de transferência." });
+    }
+  };
 
   if (loading) {
     return <SkeletonProfile />;
