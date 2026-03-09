@@ -292,6 +292,36 @@ export type Database = {
         }
         Relationships: []
       }
+      public_profiles: {
+        Row: {
+          avatar_url: string | null
+          business_name: string | null
+          display_name: string | null
+          id: string | null
+          location: string | null
+          user_type: string | null
+          website: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          business_name?: string | null
+          display_name?: string | null
+          id?: string | null
+          location?: string | null
+          user_type?: string | null
+          website?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          business_name?: string | null
+          display_name?: string | null
+          id?: string | null
+          location?: string | null
+          user_type?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       count_user_pets: { Args: { _user_id: string }; Returns: number }
