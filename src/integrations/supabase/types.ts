@@ -292,39 +292,33 @@ export type Database = {
         }
         Relationships: []
       }
-      public_profiles: {
-        Row: {
-          avatar_url: string | null
-          business_name: string | null
-          display_name: string | null
-          id: string | null
-          location: string | null
-          user_type: string | null
-          website: string | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          business_name?: string | null
-          display_name?: string | null
-          id?: string | null
-          location?: string | null
-          user_type?: string | null
-          website?: string | null
-        }
-        Update: {
-          avatar_url?: string | null
-          business_name?: string | null
-          display_name?: string | null
-          id?: string | null
-          location?: string | null
-          user_type?: string | null
-          website?: string | null
-        }
-        Relationships: []
-      }
     }
     Functions: {
       count_user_pets: { Args: { _user_id: string }; Returns: number }
+      get_public_profile: {
+        Args: { _profile_id: string }
+        Returns: {
+          avatar_url: string
+          business_name: string
+          display_name: string
+          id: string
+          location: string
+          user_type: string
+          website: string
+        }[]
+      }
+      get_public_profiles: {
+        Args: never
+        Returns: {
+          avatar_url: string
+          business_name: string
+          display_name: string
+          id: string
+          location: string
+          user_type: string
+          website: string
+        }[]
+      }
       is_pet_owner: {
         Args: { _pet_id: string; _user_id: string }
         Returns: boolean
